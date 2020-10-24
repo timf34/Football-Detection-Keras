@@ -1,0 +1,10 @@
+Add a function for tracking the ball during a video and drawing a bounding box.
+
+Add a function to test the accuracy of the ball!
+
+Add data augmentation into the data generator!
+
+Try a new CNN architecture, add the trainable upConvolutions!
+
+Get onto learning about epipolar geometry to fuse information from two cameras - refer to Haziqs Github and paper!
+
