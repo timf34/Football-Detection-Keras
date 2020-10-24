@@ -5,7 +5,11 @@ Created a computer vision model to track footballs during football games in real
 
 Still TODO:
 Add data augmentation to the data generator
-Add a function to empirically test how accurate the current model is. /n
-Create a Validation Callback /n
-Try out different loss functions. /n
-Tidy everything up considerably. /n
+
+Add a function to empirically test how accurate the current model is. 
+
+Create a Validation Callback 
+
+Try out different loss functions. 
+
+Tidy everything up considerably. 
