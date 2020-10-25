@@ -51,8 +51,6 @@ def binary_focal_loss_fixed(y_true, y_pred):
 
 
 def deepball_loss_function(y_true, y_pred):
-    # y_true (batch_size, 68, 120, 2)
-    # y_pred (batch_size, 68, 120, 2)
 
     ball_gt, bg_gt = y_true[:, :, :, 0], y_true[:, :, :, 1]
     N = K.sum(ball_gt, axis=(1, 2)) + 1
