@@ -18,9 +18,9 @@ def onebyoneconv(input):
 
     return x
 
-def up_conv(input, filters):
+def up_conv(input, filters, name):
 
-    x = layers.Conv2DTranspose(filters=filters, kernel_size=(4, 4), strides=(2, 2), activation='relu')(input)
+    x = layers.Conv2DTranspose(filters=filters, kernel_size=(4, 4), strides=(2, 2), padding='same', activation='relu', name=name)(input)
 
     return x
 
@@ -30,7 +30,7 @@ def create_model(input_size = (360, 640, 3)):
     #block1
     x = conv_layer(inputs, 16, 3, pool='False')
     x = conv_layer(x, 16, 3, pool='True')
-    conv1 = x
+    #conv1 = x
 
     #block2
     x = conv_layer(x, 32, 3, pool='False')
@@ -40,7 +40,7 @@ def create_model(input_size = (360, 640, 3)):
     #block3
     x = conv_layer(x, 64, 3, pool='False')
     x = conv_layer(x, 64, 3, pool='True')
-    conv3  =x
+    conv3 = x
 
     #conv4
     x = conv_layer(x, 64, 3, pool='False')
@@ -48,18 +48,21 @@ def create_model(input_size = (360, 640, 3)):
     conv4 = x
 
     #upsampling&concatenation
-    #TODO: see below
-    """Note, just use normal upsampling for now and a much simpler concatenation, but try 2DTranspose once this works"""
-    """In this model, I will upsample conv4 to a size of 90x160 and max pool conv 2 to the same size, and use the onexoen conv
-     on block 3. Obviously change this going forward but it will do for now and shouldnt result in too much of an imbalance"""
 
+    #conv4 upsampling
     conv4 = onebyoneconv(conv4)
-    conv4_upsamp=layers.UpSampling2D(size=(2,2))(conv4)
+    #conv4_upsamp=layers.UpSampling2D(size=(2,2))(conv4)
+    up_con4 = up_conv(conv4, 32, 'up_conv4')
 
+    #conv3upsampling
     conv3 = onebyoneconv(conv3)
-    conv3_upsamp=layers.UpSampling2D(size=(2,2))(conv3)
+    #conv3_upsamp=layers.UpSampling2D(size=(2,2))(conv3)
+    up_conv3 = up_conv(conv3, 32, 'upconv3')
 
-    concat = layers.Concatenate(axis=-1)([conv4_upsamp, conv3_upsamp, conv2])
+    #conv2 pass through/ skip connection
+    conv2 = onebyoneconv(conv2)
+
+    concat = layers.Concatenate(axis=-1)([up_con4, up_conv3, conv2])
 
     final_layer = layers.Conv2D(96, 3, strides=(1,1), padding='same')(concat)
     output_layer = layers.Conv2D(2, 3, strides=(1,1), activation='softmax', padding='same')(final_layer)
@@ -70,3 +73,5 @@ def create_model(input_size = (360, 640, 3)):
 
     model.summary()
     return model
+
+create_model()
