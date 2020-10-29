@@ -26,10 +26,17 @@ heatmap[0, 20, 140, 0] = 1.
 
 
 aug_list = iaa.OneOf([
+<<<<<<< Updated upstream
   #iaa.Dropout([0.02, 0.1]),
   #iaa.Sharpen((0.0, 1.0)),
   iaa.MultiplyHue((0.7, 1.4)),
   #iaa.MultiplyBrightness((0.7, 1.4))
+=======
+  iaa.Dropout([0.02, 0.1]),
+  iaa.Sharpen((0.0, 1.0)),
+  iaa.MultiplyHue((0.7, 1.4)),
+  iaa.MultiplyBrightness((0.7, 1.4))
+>>>>>>> Stashed changes
 ])
 
 aug = iaa.Sequential([aug_list, iaa.Fliplr(0.5)], random_order=True)
