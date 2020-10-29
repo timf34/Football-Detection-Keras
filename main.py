@@ -43,6 +43,8 @@ def compile_model():
 
     return
 
+compile_model()
+
 def predict():
 
     #customObj = {'deepball_loss_function': deepball_loss_function, 'deepball_precision': deepball_precision}
@@ -131,13 +133,13 @@ def video(vid, output):
     cv2.destroyAllWindows()
 
 
-vid = cv2.VideoCapture(VID6_PATH)
+"""vid = cv2.VideoCapture(VID6_PATH)
 size = (int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)),int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 codec = cv2.VideoWriter_fourcc(*'DIVX')
 output = cv2.VideoWriter('Seq6Ballco4.avi',codec,25.0,size)
 outputSeg = cv2.VideoWriter('Seq6Seg.avi', codec,25.0,size)
 
-video(vid, output)
+video(vid, output)"""
 
 
 

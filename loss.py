@@ -66,8 +66,8 @@ def deepball_loss_function(y_true, y_pred):
 
     Lneg = K.sum(zer + (bg_cm * bg_gt), axis=(1, 2))
     Lneg = K.sum(K.zeros_like(M) + (Lneg / tf.maximum(1.0, M)))
-    print (Lpos)
-    print(K.eval(Lpos),K.eval(Lneg))
+    #print (Lpos)
+    #print(K.eval(Lpos),K.eval(Lneg))
 
     # Multiplying by batch_size as Keras automatically averages the scalar output over it
     return (-Lpos - 0.3 * Lneg) * BATCH_SIZE
