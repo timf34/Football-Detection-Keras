@@ -9,6 +9,7 @@ from constants import *
 import imgaug.augmenters as iaa
 from PIL import Image
 from tensorflow.keras import preprocessing
+#correct one
 
 def get_coords(data):
     """set up txt file as
