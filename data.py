@@ -31,7 +31,7 @@ def heatmap_splat(x, y):
     #array[(x-3):(x+4):1, y-2:y+3:1, 0] = 0.55
     #array[(x-2):(x+3):1, y-2:y+3:1, 0] = 0.9
     #ball channel
-    y_true[(x-1):(x+2):1, y-1:y+2:1, 0] = 1.
+    #y_true[(x-1):(x+2):1, y-1:y+2:1, 0] = 1.
     y_true[x, y, 0] = 1.
     #background channel
     y_true[(x - 1):(x + 2):1, y - 1:y + 2:1, 1] = 0.

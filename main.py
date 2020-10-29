@@ -25,7 +25,7 @@ def compile_model():
 
     train_datagen = DataGenerator(file_path=IMAGE_PATH, config_path=CONFIG_PATH)
 
-    model.fit(x=train_datagen, epochs=2, callbacks=[model_checkpoint])
+    model.fit(x=train_datagen, epochs=6, callbacks=[model_checkpoint])
 
     model.save_weights('footballcnn.h5')
 
