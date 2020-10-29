@@ -25,7 +25,7 @@ def compile_model():
 
     train_datagen = DataGenerator(file_path=IMAGE_PATH, config_path=CONFIG_PATH)
 
-    model.fit(x=train_datagen, epochs=2, callbacks=[model_checkpoint])
+    model.fit(x=train_datagen, epochs=6, callbacks=[model_checkpoint])
 
     model.save_weights('footballcnn.h5')
 
@@ -42,6 +42,8 @@ def compile_model():
     print(c)"""
 
     return
+
+compile_model()
 
 def predict():
 
@@ -131,13 +133,13 @@ def video(vid, output):
     cv2.destroyAllWindows()
 
 
-vid = cv2.VideoCapture(VID6_PATH)
+"""vid = cv2.VideoCapture(VID6_PATH)
 size = (int(vid.get(cv2.CAP_PROP_FRAME_WIDTH)),int(vid.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 codec = cv2.VideoWriter_fourcc(*'DIVX')
 output = cv2.VideoWriter('Seq6Ballco4.avi',codec,25.0,size)
 outputSeg = cv2.VideoWriter('Seq6Seg.avi', codec,25.0,size)
 
-video(vid, output)
+video(vid, output)"""
 
 
 

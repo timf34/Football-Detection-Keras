@@ -6,8 +6,10 @@ from tensorflow.keras.preprocessing import image
 import math
 import numpy as np
 from constants import *
+import imgaug.augmenters as iaa
 from PIL import Image
 from tensorflow.keras import preprocessing
+#correct one
 
 def get_coords(data):
     """set up txt file as
@@ -30,7 +32,7 @@ def heatmap_splat(x, y):
     #array[(x-3):(x+4):1, y-2:y+3:1, 0] = 0.55
     #array[(x-2):(x+3):1, y-2:y+3:1, 0] = 0.9
     #ball channel
-    y_true[(x-1):(x+2):1, y-1:y+2:1, 0] = 1.
+    #y_true[(x-1):(x+2):1, y-1:y+2:1, 0] = 1.
     y_true[x, y, 0] = 1.
     #background channel
     y_true[(x - 1):(x + 2):1, y - 1:y + 2:1, 1] = 0.
@@ -42,12 +44,13 @@ def heatmap_splat(x, y):
 
 class DataGenerator(Sequence):
 
-    def __init__(self, file_path, config_path, debug=False):
+    def __init__(self, file_path, config_path, debug=False, augment=True):
 
         self.coords = []
         self.image_path = file_path
         self.debug = debug
         self.config = config_path
+        self.augment = augment
 
         if not os.path.isfile(config_path):
             print("File path {} does not exist. Exiting...".format(config_path))
@@ -81,15 +84,25 @@ class DataGenerator(Sequence):
             images_path, x, y = row
 
             proc_image = image.load_img(self.image_path + images_path, target_size=(INPUT_HEIGHT, INPUT_WIDTH))
-            proc_image = image.img_to_array(proc_image)
-            proc_image = np.expand_dims(proc_image, axis=0)/255.
-            #proc_image = tf.keras.applications.resnet50.preprocess_input(proc_image)
+            proc_image = image.img_to_array(proc_image, dtype='uint8')
 
-            batch_images[i] = proc_image
-
-            heatmap = heatmap_splat(y, x) #y is height and x is width!!
+            heatmap = heatmap_splat(y, x)  # y is height and x is width!!
             heatmap = np.expand_dims(heatmap, axis=0)
 
+            aug_list = iaa.OneOf([
+              iaa.Dropout([0.05, 0.1]),
+              iaa.Sharpen((0.0, 1.0)),
+              iaa.MultiplyHue((0.7,1.4)),
+              iaa.MultiplyBrightness((0.7,1.4)),
+            ])
+
+            aug = iaa.Sequential([aug_list, iaa.Fliplr(0.5)], random_order=True)
+
+            proc_image, heatmap = aug.augment(image=proc_image, heatmaps=heatmap)
+
+            proc_image = np.expand_dims(proc_image, axis=0)
+            proc_image = proc_image / 255. #just for now try without normalising
+            batch_images[i] = proc_image
             batch_heatmaps[i] = heatmap
 
         return batch_images, batch_heatmaps
