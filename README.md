@@ -1,7 +1,7 @@
 # Football-Detection-Keras
 Football Detection CNN built in Keras
 
-Created a computer vision model to track footballs during football games in real time. This is still a work in progress. Current network was built in Keras and inspired by DeepBall (Komorowski 2019). 
+Created a computer vision model to track footballs during football games in real time. Current network was built in Keras and inspired by DeepBall (Komorowski 2019). 
 
 Still TODO:
 
