@@ -7,8 +7,6 @@ Still TODO:
 
 Create a Validation Callback 
 
-Try out different loss functions. 
-
 Use epipolar geometry to fuse information from two cameras to accurately locate the ball
 
 Tidy everything up considerably. 
